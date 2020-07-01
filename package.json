@@ -4,7 +4,8 @@
   "description": "Scraps the RisingStack blog and returns articles without images.",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "server": "nodemon index.js"
   },
   "author": "Roland Koczan",
   "license": "ISC",
@@ -13,5 +14,8 @@
     "cheerio": "^1.0.0-rc.3",
     "dotenv": "^8.2.0",
     "express": "^4.17.1"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.4"
   }
 }
