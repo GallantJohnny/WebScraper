@@ -1,7 +1,8 @@
 const express = require('express');
 const app = express();
-const port = 5000;
+const dotenv = require('dotenv');
 
+dotenv.config();
 app.use('/', router);
 
-app.listen(port, () => console.log(`Server is running on ${port}`));
+app.listen(process.env.SERVER_PORT, () => console.log(`Server is running on ${process.env.SERVER_PORT}`));
