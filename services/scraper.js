@@ -59,7 +59,7 @@ const recursiveFunction = (articlePages) => {
 
 const nonRecursiveFunction = async (articlePages) => {
   let noImgLinks = [];
-  const blogPages = articlePages.map(articlePageUrl => {
+  const articlePagePromises = articlePages.map(articlePageUrl => {
     return new Promise((resolve, reject) => {
       axios.get(articlePageUrl).then(async response => {
         const $ = cheerio.load(response.data);
@@ -85,6 +85,6 @@ const nonRecursiveFunction = async (articlePages) => {
       });
     });
   });
-  await Promise.all(blogPages);
+  await Promise.all(articlePagePromises);
   return noImgLinks;
 };
