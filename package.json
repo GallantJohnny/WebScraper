@@ -4,8 +4,11 @@
   "description": "Scraps the RisingStack blog and returns articles without images.",
   "main": "index.js",
   "scripts": {
+    "install-client": "npm install --prefix client",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "server": "nodemon index.js"
+    "server": "nodemon index.js",
+    "client": "npm start --prefix client",
+    "dev": "concurrenlty \"npm run server\" \"npm run client\" "
   },
   "author": "Roland Koczan",
   "license": "ISC",
@@ -16,6 +19,7 @@
     "express": "^4.17.1"
   },
   "devDependencies": {
+    "concurrently": "^5.2.0",
     "nodemon": "^2.0.4"
   }
 }
