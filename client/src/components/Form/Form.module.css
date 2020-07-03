@@ -27,6 +27,7 @@
   margin: 10px auto;
   padding-left: 5px;
   font-size: 1.3em;
+  text-align: center;
 }
 
 ::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */

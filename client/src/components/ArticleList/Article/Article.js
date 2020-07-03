@@ -15,19 +15,17 @@ const Article = (props) => {
     bottomPoints = '0,100 100,100 100,0';
   }
 
+  const alignment = isEven ? { textAlign: 'right' } : { textAlign: 'left' };
+
   return (
-    <div>
-      <div className={styles.Article}>
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" preserveAspectRatio="none">
-          <polygon fill="white" points={topPoints} />
-        </svg>
-        <div className={styles.TextContainer}>
-          <h3>Article Title</h3>
-          <p>Placholder text about this article.</p>
-        </div>
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" preserveAspectRatio="none">
-          <polygon fill="white" points={bottomPoints} />
-        </svg>
+    <div className={styles.Article}>
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" preserveAspectRatio="none">
+        <polygon fill="white" points={topPoints} />
+      </svg>
+      <div className={styles.TextContainer} style={alignment}>
+        <h2>{props.article.title}</h2>
+        <div>{props.article.updated}</div>
+        <div><a href={props.article.url} style={{ textDecoration: 'none' }}>[ link ]</a></div>
       </div>
     </div>
   )

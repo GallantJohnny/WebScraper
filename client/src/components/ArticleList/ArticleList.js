@@ -5,11 +5,15 @@ import Article from './Article/Article';
 import styles from './ArticleList.module.css'
 
 const ArticleList = (props) => {
-  let articles = ['Title 1', 'Title 2', 'Title 3', 'Title 4'];
+  let render = <div className={styles.loader}>Loading</div>;
+
+  if (!props.isLoading) {
+    render = props.articles.map((article, i) => (<Article key={i} index={i} article={article}></Article>));
+  }
 
   return (
     <div className={styles.ArticleList}>
-      {articles.map((article, i) => (<Article key={i} index={i}></Article>))}
+      {render}
     </div>
   )
 }
