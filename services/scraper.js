@@ -71,6 +71,8 @@ const recursiveFunction = (articlePages) => {
   })
 }
 
+
+// Fails with articlaPgae > 4
 const nonRecursiveFunction = async (articlePages) => {
   let noImgLinks = [];
   const articlePagePromises = articlePages.map(articlePageUrl => {
