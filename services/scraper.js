@@ -33,7 +33,13 @@ const recursiveFunction = (articlePages) => {
         return new Promise((resolve, reject) => {
           axios.get(singleLinkToArticle).then(response => {
             const $ = cheerio.load(response.data);
-            if (cheerio.html($('article div p img')) === '') noImgLinks.push(singleLinkToArticle);
+            const title = $('.post-jumbotron-title').text();
+            const updated = $('.post-jumbotron-last-updated time').text();
+            if (cheerio.html($('article div p img')) === '') noImgLinks.push({
+              url: singleLinkToArticle,
+              title: title,
+              updated: updated
+            });
             resolve();
           });
         });
