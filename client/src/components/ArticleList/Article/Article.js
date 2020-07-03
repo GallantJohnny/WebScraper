@@ -5,7 +5,6 @@ import styles from './Article.module.css';
 const Article = (props) => {
   const isEven = props.index % 2 === 0 ? true : false;
   let topPoints = '';
-  let bottomPoints = '';
 
   if (isEven) {
     topPoints = '0,0 0,100 100,0';
