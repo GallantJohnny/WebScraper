@@ -86,8 +86,14 @@ const nonRecursiveFunction = async (articlePages) => {
           const singleLinkToArticle = `https://blog.risingstack.com${url}`;
           return new Promise((resolve, reject) => {
             axios.get(singleLinkToArticle).then(response => {
-              const $ = cheerio.load(response.data);
-              if (cheerio.html($('article div p img')) === '') noImgLinks.push(singleLinkToArticle);
+              const selector = cheerio.load(response.data);
+              const title = selector('.post-jumbotron-title').text();
+              const updated = selector('.post-jumbotron-last-updated time').text();
+              if (cheerio.html(selector('article div p img')) === '') noImgLinks.push({
+                url: singleLinkToArticle,
+                title: title,
+                updated: updated
+              });
               resolve();
             });
           });
