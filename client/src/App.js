@@ -6,14 +6,20 @@ import ArticleList from './components/ArticleList/ArticleList';
 
 class App extends Component {
   state = {
-    isLoading: false
+    isLoading: false,
+    inputValue: '',
+    articles: []
+  }
+
+  onInputChange = (event) => {
+    this.setState({ inputValue: event.target.value });
   }
 
   render() {
     return (
       <div className="App">
-        <Form />
-        <ArticleList />
+        <Form onInputChange={event => this.onInputChange(event)} value={this.state.inputValue} />
+        <ArticleList articles={this.state.articles} />
       </div>
     );
   }
