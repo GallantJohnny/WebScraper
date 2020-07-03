@@ -2,8 +2,16 @@ const axios = require('axios');
 const cheerio = require('cheerio');
 
 exports.returnArticlesWithoutImgs = async (req, res) => {
-  const numOfPages = req.body.numOfPages;
+  let numOfPages = req.body.numOfPages;
   let articlePages = [];
+
+  // Find out how many pages there are and set numOfPages accordingly
+  if (numOfPages == 1) {
+    const response = await axios.get('https://blog.risingstack.com');
+    const $ = cheerio.load(response.data);
+    const dateText = $('.page-number').text();
+    numOfPages = dateText.match(/\d/g)[1];
+  }
 
   for (let i = 1; i <= numOfPages; i++) {
     articlePages.push(`https://blog.risingstack.com/page/${i}`);
