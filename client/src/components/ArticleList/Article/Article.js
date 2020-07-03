@@ -9,10 +9,8 @@ const Article = (props) => {
 
   if (isEven) {
     topPoints = '0,0 0,100 100,0';
-    bottomPoints = '0,0 0,100 100,100';
   } else {
     topPoints = '100,100 100,0 0,0';
-    bottomPoints = '0,100 100,100 100,0';
   }
 
   const alignment = isEven ? { textAlign: 'right' } : { textAlign: 'left' };
