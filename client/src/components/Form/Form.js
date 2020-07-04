@@ -13,6 +13,7 @@ class Form extends Component {
         <label className={styles.Label}>How many pages would you like to scrap?</label>
         {this.props.error !== '' ? <div className={styles.Error}>Please enter a number!</div> : null}
         <input
+          disabled={this.props.isLoading}
           onChange={this.props.onInputChange}
           value={this.props.value}
           className={styles.Input}
