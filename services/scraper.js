@@ -1,27 +1,47 @@
 const axios = require('axios');
 const cheerio = require('cheerio');
 
+exports.fetchMaximumNumOfPages = async (req, res) => {
+  let numOfPages = await fetchMaximumNumOfPages();
+
+  res.status(200).json(numOfPages);
+}
+
 exports.returnArticlesWithoutImgs = async (req, res) => {
   let numOfPages = req.body.numOfPages;
   let articlePages = [];
+  const maxNumOfPages = await fetchMaximumNumOfPages();
 
   // Find out how many pages there are and set numOfPages accordingly
   if (numOfPages == 1) {
-    const response = await axios.get('https://blog.risingstack.com');
-    const $ = cheerio.load(response.data);
-    const dateText = $('.page-number').text();
-    numOfPages = dateText.match(/\d/g)[1];
+    numOfPages = maxNumOfPages;
   }
 
-  for (let i = 1; i <= numOfPages; i++) {
-    articlePages.push(`https://blog.risingstack.com/page/${i}`);
+  if (numOfPages <= maxNumOfPages) {
+    for (let i = 1; i <= numOfPages; i++) {
+      articlePages.push(`https://blog.risingstack.com/page/${i}`);
+    }
+
+    console.log('Start: ' + Date.now() / 1000);
+    const links = await returnArticleWithoutImgs(articlePages);
+    res.send(links);
+    console.log('Finish: ' + Date.now() / 1000);
+    console.log('--------------------');
+  } else {
+    res.status(404).end();
   }
 
-  console.log('Start: ' + Date.now() / 1000);
-  const links = await returnArticleWithoutImgs(articlePages);
-  res.send(links);
-  console.log('Finish: ' + Date.now() / 1000);
-  console.log('--------------------');
+}
+
+const fetchMaximumNumOfPages = async (req, res) => {
+  let numOfPages = '';
+  const response = await axios.get('https://blog.risingstack.com');
+  const $ = cheerio.load(response.data);
+  const dateText = $('.page-number').text();
+
+  numOfPages = dateText.match(/\d/g)[1];
+
+  return numOfPages;
 }
 
 const returnArticleWithoutImgs = (articlePages) => {

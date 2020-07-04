@@ -11,7 +11,14 @@ class App extends Component {
     isLoading: false,
     inputValue: '',
     articles: [],
-    error: ''
+    error: '',
+    maxNumOfPages: null
+  }
+
+  componentDidMount() {
+    axios.get('/maximum-num-of-pages').then(response => {
+      this.setState({ maxNumOfPages: response.data });
+    })
   }
 
   onInputChange = (event) => {
@@ -40,6 +47,7 @@ class App extends Component {
           value={this.state.inputValue}
           isLoading={this.state.isLoading}
           error={this.state.error}
+          maxNumOfPages={this.state.maxNumOfPages}
         />
         <ArticleList
           articles={this.state.articles}

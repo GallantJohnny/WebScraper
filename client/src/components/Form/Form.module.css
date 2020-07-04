@@ -4,7 +4,7 @@
   font-size: 1.2;
   font-weight: bolder;
   border-radius: 10px 50px 10px 50px;
-  width: 400px;
+  max-width: 400px;
   padding: 30px;
   margin: auto;
 }
@@ -59,7 +59,8 @@
 
 .Button {
   display: block;
-  background-color: #fff;
+  background-color: rgb(255, 255, 255);
+  box-shadow: 0 0 5px 2px #014775ab;
   color: #0087e2;
   font-weight: bold;
   border: none;
