@@ -40,6 +40,10 @@
   text-align: center;
 }
 
+.Input:disabled {
+  border-bottom: none;
+}
+
 ::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
   color: #fff;
   opacity: 0.5; /* Firefox */

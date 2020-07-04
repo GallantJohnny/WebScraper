@@ -8,6 +8,10 @@ class Form extends Component {
   }
 
   render() {
+    let borderBottom = {};
+
+    if (this.props.error !== '') borderBottom = { borderBottom: 'solid red 2px' };
+
     return (
       <form onSubmit={this.props.onFormSubmitted} className={styles.Form}>
         <label className={styles.Label}>How many pages would you like to scrap?</label>
@@ -20,7 +24,9 @@ class Form extends Component {
           name="numOfPages"
           type="number"
           placeholder="e.g. 3"
-          min="0">
+          min="0"
+          style={borderBottom}
+        >
         </input>
         <button disabled={this.props.isLoading} className={styles.Button} >Scrap RisingStack!</button>
       </form>
