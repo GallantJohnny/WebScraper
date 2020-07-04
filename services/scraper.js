@@ -24,7 +24,7 @@ exports.returnArticlesWithoutImgs = async (req, res) => {
   console.log('--------------------');
 }
 
-const recursiveFunction = (articlePages) => {
+const returnArticleWithoutImgs = (articlePages) => {
   return new Promise((resolve, reject) => {
     const lastPage = articlePages.pop();
     let noImgLinks = [];
@@ -57,7 +57,7 @@ const recursiveFunction = (articlePages) => {
       Promise.all(promises).then(async values => {
         if (articlePages.length) {
           // Recursively go trough each blog page until none left
-          const links = await recursiveFunction(articlePages);
+          const links = await returnArticleWithoutImgs(articlePages);
           links.forEach(element => {
             noImgLinks.push(element);
           });
