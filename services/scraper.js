@@ -63,7 +63,7 @@ const returnArticleWithoutImgs = (articlePages) => {
           });
           resolve(noImgLinks);
         } else {
-          // No blog page left, return links to articles without imgs
+          // No blog page left, return urls to articles without imgs
           resolve(noImgLinks);
         }
       });
