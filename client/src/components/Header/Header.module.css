@@ -1,0 +1,16 @@
+.Header {
+  text-align: center;
+  height: 150px;
+  width: 100%;
+  margin: 40px 0 100px 0;
+  padding: 20px 0;
+  background-color: #0087e2;
+  color: #fff;
+  text-align: center;
+}
+
+.HeaderText {
+  max-width: 500px;
+  display: block;
+  margin: auto;
+}

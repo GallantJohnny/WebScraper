@@ -3,35 +3,43 @@ import './App.css';
 
 import Form from './components/Form/Form';
 import ArticleList from './components/ArticleList/ArticleList';
+import Header from './components/Header/Header';
 import axios from './axiosConfig';
 
 class App extends Component {
   state = {
     isLoading: false,
     inputValue: '',
-    articles: []
+    articles: [],
+    error: ''
   }
 
   onInputChange = (event) => {
-    this.setState({ inputValue: event.target.value });
+    this.setState({ inputValue: event.target.value, error: '' });
   }
 
   onFormSubmitted = e => {
     e.preventDefault();
-    this.setState({ isLoading: true });
-    axios.put('fetch-articles-without-imgs', { numOfPages: this.state.inputValue }).then(response => {
-      this.setState({ articles: [...response.data], isLoading: false });
-    })
+    if (this.state.inputValue !== '') {
+      this.setState({ isLoading: true });
+      axios.put('fetch-articles-without-imgs', { numOfPages: this.state.inputValue }).then(response => {
+        this.setState({ articles: [...response.data], isLoading: false });
+      })
+    } else {
+      this.setState({ error: 'Please enter a number!' });
+    }
   }
 
   render() {
     return (
       <div className="App">
+        <Header />
         <Form
           onInputChange={event => this.onInputChange(event)}
           onFormSubmitted={e => this.onFormSubmitted(e)}
           value={this.state.inputValue}
           isLoading={this.state.isLoading}
+          error={this.state.error}
         />
         <ArticleList
           articles={this.state.articles}

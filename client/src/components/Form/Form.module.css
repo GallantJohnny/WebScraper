@@ -16,6 +16,16 @@
   margin:  0 0 20px 0;
 }
 
+.Error {
+  background-color: rgb(216, 75, 75);
+  color: #fff;
+  text-align: center;
+  padding: 20px 0;
+  border-radius: 5px;
+  width: 200px;
+  margin: auto;
+}
+
 .Input {
   display: block;
   background-color: #0087e2;

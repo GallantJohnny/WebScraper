@@ -18,7 +18,7 @@ exports.returnArticlesWithoutImgs = async (req, res) => {
   }
 
   console.log('Start: ' + Date.now() / 1000);
-  const links = await recursiveFunction(articlePages);
+  const links = await returnArticleWithoutImgs(articlePages);
   res.send(links);
   console.log('Finish: ' + Date.now() / 1000);
   console.log('--------------------');
