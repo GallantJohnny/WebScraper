@@ -18,6 +18,8 @@ class App extends Component {
   componentDidMount() {
     axios.get('/maximum-num-of-pages').then(response => {
       this.setState({ maxNumOfPages: response.data });
+    }).catch(err => {
+      console.log(err);
     })
   }
 
@@ -31,7 +33,10 @@ class App extends Component {
       this.setState({ isLoading: true });
       axios.put('fetch-articles-without-imgs', { numOfPages: this.state.inputValue }).then(response => {
         this.setState({ articles: [...response.data], isLoading: false });
-      })
+      }).catch(err => {
+        console.log(err);
+        this.setState({ isLoading: false });
+      });
     } else {
       this.setState({ error: 'Please enter a number!' });
     }
