@@ -46,9 +46,11 @@ const fetchMaximumNumOfPages = async (req, res) => {
 
 const returnArticleWithoutImgs = (articlePages) => {
   return new Promise((resolve, reject) => {
+    // Cut and store the last link in the array
     const lastPage = articlePages.pop();
     let noImgLinks = [];
 
+    // Go trough each article on stored page
     axios.get(lastPage).then(async response => {
       const $ = cheerio.load(response.data);
       const aHref = [];
