@@ -38,6 +38,8 @@ const fetchMaximumNumOfPages = async (req, res) => {
   const $ = cheerio.load(response.data);
   const dateText = $('.page-number').text();
 
+  // Matches a regex pattern for the last digit,
+  // which represents the current number of pages
   numOfPages = dateText.match(/\d/g)[1];
 
   return numOfPages;
