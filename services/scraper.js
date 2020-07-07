@@ -30,7 +30,6 @@ exports.returnArticlesWithoutImgs = async (req, res) => {
   } else {
     res.status(404).end();
   }
-
 }
 
 const fetchMaximumNumOfPages = async (req, res) => {
@@ -48,6 +47,7 @@ const returnArticleWithoutImgs = (articlePages) => {
   return new Promise((resolve, reject) => {
     // Cut and store the last link in the array
     const lastPage = articlePages.pop();
+    // Links to article without any imgs will be stored as a string in this array
     let noImgLinks = [];
 
     // Go trough each article on stored page
