@@ -10,9 +10,10 @@ exports.fetchMaximumNumOfPages = async (req, res) => {
 exports.returnArticlesWithoutImgs = async (req, res) => {
   let numOfPages = req.body.numOfPages;
   let articlePages = [];
+  // Find out how many pages there are and set maxNumOfPages accordingly
   const maxNumOfPages = await fetchMaximumNumOfPages();
 
-  // Find out how many pages there are and set numOfPages accordingly
+  // If request numOfPages = 1, than all pages needs to be searched
   if (numOfPages == 1) {
     numOfPages = maxNumOfPages;
   }
