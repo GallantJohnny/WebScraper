@@ -11,13 +11,11 @@ dotenv.config();
 app.use(express.json());
 app.use('/api', router);
 
-// ... other app.use middleware 
 app.use(express.static(path.join(__dirname, "client", "build")))
 
-// ...
-// Right before your app.listen(), add this:
+// Serve index.html to browser
 app.get("*", (req, res) => {
   res.sendFile(path.join(__dirname, "client", "build", "index.html"));
 });
 
-app.listen(process.env.PORT, () => console.log(`Server is running on ${process.env.SERVER_PORT}`));
+app.listen(process.env.PORT, () => console.log(`Server is running on ${process.env.PORT}`));
