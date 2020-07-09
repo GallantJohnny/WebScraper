@@ -46,52 +46,37 @@ const fetchMaximumNumOfPages = async (req, res) => {
   return numOfPages;
 }
 
-const returnArticleWithoutImgs = (articlePages) => {
-  return new Promise((resolve, reject) => {
-    // Cut and store the last link in the array
-    const lastPage = articlePages.pop();
-    // Links to article without any imgs will be stored as a string in this array
-    let noImgLinks = [];
+const returnArticleWithoutImgs = async (articlePages) => {
+  // Cut and store the last link in the array
+  const lastPage = articlePages.pop();
 
-    // Go trough each article on stored page
-    axios.get(lastPage).then(async response => {
-      const $ = cheerio.load(response.data);
-      const aHref = [];
+  // Go trough each article on stored page
+  const response = await axios.get(lastPage);
+  const $ = cheerio.load(response.data);
 
-      $('.post-title a').each((i, element) => aHref.push($(element).attr('href')));
+  const promises = $('.post-title a').toArray().map(async (element) => {
+    const attrValue = $(element).attr('href');
+    const singleLinkToArticle = `https://blog.risingstack.com/${attrValue}`;
+    const response = await axios.get(singleLinkToArticle);
+    const $$ = cheerio.load(response.data);
+    const title = $$('.post-jumbotron-title').text();
+    const updated = $$('.post-jumbotron-last-updated time').text();
+    if (cheerio.html($$('article div p img')) === '') return {
+      url: singleLinkToArticle,
+      title: title,
+      updated: updated
+    };
+  });
 
-      // Create an array of promises
-      const promises = aHref.map(url => {
-        const singleLinkToArticle = `https://blog.risingstack.com${url}`;
-        return new Promise((resolve, reject) => {
-          axios.get(singleLinkToArticle).then(response => {
-            const $ = cheerio.load(response.data);
-            const title = $('.post-jumbotron-title').text();
-            const updated = $('.post-jumbotron-last-updated time').text();
-            if (cheerio.html($('article div p img')) === '') noImgLinks.push({
-              url: singleLinkToArticle,
-              title: title,
-              updated: updated
-            });
-            resolve();
-          });
-        });
-      });
-
-      // Only resolve if all the promises finished
-      Promise.all(promises).then(async values => {
-        if (articlePages.length) {
-          // Recursively go trough each blog page until none left
-          const links = await returnArticleWithoutImgs(articlePages);
-          links.forEach(element => {
-            noImgLinks.push(element);
-          });
-          resolve(noImgLinks);
-        } else {
-          // No blog page left, return urls to articles without imgs
-          resolve(noImgLinks);
-        }
-      });
-    })
-  })
+  // Only resolve if all the promises finished
+  const resolved = await Promise.all(promises);
+  const filtered = resolved.filter(value => value === undefined ? false : true);
+  if (articlePages.length) {
+    // Recursively go trough each blog page until none left
+    const links = await returnArticleWithoutImgs(articlePages);
+    return filtered.concat(links);
+  } else {
+    // No blog page left, return urls to articles without imgs
+    return filtered;
+  }
 }

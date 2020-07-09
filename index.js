@@ -18,4 +18,4 @@ app.get("*", (req, res) => {
   res.sendFile(path.join(__dirname, "client", "build", "index.html"));
 });
 
-app.listen(process.env.PORT, () => console.log(`Server is running on ${process.env.PORT}`));
+app.listen(process.env.PORT, () => console.log(`Server is running on http://localhost:${process.env.PORT}`));
